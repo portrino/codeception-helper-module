@@ -9,3 +9,53 @@
 [![Total Downloads](https://poser.pugx.org/portrino/codeception-helper-module/downloads)](https://packagist.org/packages/portrino/codeception-helper-module)
 
 Generic helper module for codeception acceptance testing
+
+This package provides parsing and validation of sitemap.xml files
+
+## Installation
+
+You need to add the repository into your composer.json file
+
+```bash
+    composer require --dev portrino/codeception-helper-module
+```
+
+## Usage
+
+You can use this module as any other Codeception module, by adding '\Codeception\Module\Portrino\Database' to the 
+enabled modules in your codeception suite configurations.
+
+### Enable module
+
+```yml
+modules:
+    enabled:
+        - \Codeception\Module\Portrino\Database:
+            depends: Db
+ ```  
+ 
+Update codeception build
+   
+```bash
+codecept build
+```
+
+### Methods
+
+#### truncateTableInDatabase($table)
+
+Truncates the ``$table``.
+
+```php
+  $I->truncateTableInDatabase($table);
+  
+```
+
+#### deleteFromDatabase($table, $criteria)
+
+Deletes the row(s) from ``$table`` matching the ``$criteria``
+
+```php
+  $I->deleteFromDatabase($table, $criteria);
+  
+```
