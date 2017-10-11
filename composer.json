@@ -22,7 +22,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Codeception\\Module\\Tests\\": "tests"
+            "Codeception\\Module\\Portrino\\Tests\\": "tests"
         }
     },
     "config": {

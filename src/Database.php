@@ -49,9 +49,18 @@ class Database extends Module implements DependsOnModule
     public function truncateTableInDatabase($table)
     {
         $query = 'TRUNCATE %s';
-        $query = sprintf($query, $this->db->driver->getQuotedName($table));
+        $query = sprintf($query, $this->getQuotedName($table));
         $this->debugSection('Query', $query);
         $this->executeQuery($query);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getQuotedName($name)
+    {
+        return $this->db->driver->getQuotedName($name);
     }
 
     /**
