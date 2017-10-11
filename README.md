@@ -59,3 +59,34 @@ Deletes the row(s) from ``$table`` matching the ``$criteria``
   $I->deleteFromDatabase($table, $criteria);
   
 ```
+
+### Interfaces
+
+You should use our constants for the database tables of the corresponding system for database operations.
+
+#### TYPO3
+
+``\Codeception\Module\Portrino\DatabaseTables\Typo3``
+
+Example:
+```php
+  $I->seeInDatabase(
+        \Codeception\Module\Portrino\DatabaseTables\Typo3::PAGES,
+        [
+            'uid' => 123,
+        ]
+  );
+```
+
+#### Shopware
+
+``\Codeception\Module\Portrino\DatabaseTables\Shopware``
+
+```php
+  $I->seeInDatabase(
+        \Codeception\Module\Portrino\DatabaseTables\Shopware::ARTICLE,
+        [
+            'id' => 123,
+        ]
+  );
+```
