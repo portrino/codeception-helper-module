@@ -10,7 +10,6 @@ use Codeception\Actor;
  */
 abstract class BasePage
 {
-
     /**
      * @var string
      */
@@ -20,17 +19,6 @@ abstract class BasePage
      * @var Actor
      */
     protected $tester;
-
-    /**
-     * BasePage constructor.
-     * @param Actor $I
-     */
-    public function __construct(Actor $I)
-    {
-        $this->tester = $this->getTester();
-    }
-
-    abstract public function getTester();
 
     /**
      * @return $this

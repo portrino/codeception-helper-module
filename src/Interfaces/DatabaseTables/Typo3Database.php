@@ -2,10 +2,10 @@
 namespace Portrino\Codeception\Interfaces\DatabaseTables;
 
 /**
- * Interface Typo3
+ * Interface Typo3Database
  * @package Portrino\Codeception\Interfaces\DatabaseTables
  */
-interface Typo3
+interface Typo3Database
 {
     const BACKEND_LAYOUT = 'backend_layout';
 
