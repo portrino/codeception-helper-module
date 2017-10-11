@@ -1,0 +1,56 @@
+env:
+  global:
+      - CC_TEST_REPORTER_ID=ad0e86376d2db4d6c5f6d5f358308d44809b07057319a314dac2169671c6fedd
+
+language: php
+
+branches:
+  only:
+    - master
+    - /^[0-9]+\.[0-9]+$/
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.0
+    - php: 7.1
+
+before_install:
+  - composer self-update
+  - composer --version
+
+install:
+  - composer install
+
+before_script:
+  # Restore composer.json
+  - git checkout composer.json
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - >
+    echo;
+    echo "Running PHP PSR-2 Coding Standards Checks";
+    build/bin/phpcs --standard=PSR2 --warning-severity=0 src tests
+
+  - >
+    echo;
+    echo "Running unit tests";
+    build/bin/phpunit --colors --coverage-clover build/logs/clover.xml
+
+  - >
+    echo;
+    echo "Running PHP Static Analysis";
+    build/bin/phpstan analyse -c phpstan.neon -l 7 src tests
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
