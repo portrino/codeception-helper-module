@@ -1,10 +1,9 @@
 <?php
-
-namespace Codeception\Module\Portrino\DatabaseTables;
+namespace Portrino\Codeception\Interfaces\DatabaseTables;
 
 /**
  * Interface Typo3
- * @package Codeception\Module\Portrino\DatabaseTables
+ * @package Portrino\Codeception\Interfaces\DatabaseTables
  */
 interface Typo3
 {

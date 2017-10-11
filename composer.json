@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Codeception\\Module\\Portrino\\": "src"
+            "Portrino\\Codeception\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Codeception\\Module\\Portrino\\Tests\\": "tests"
+            "Portrino\\Codeception\\Tests\\": "tests"
         }
     },
     "config": {

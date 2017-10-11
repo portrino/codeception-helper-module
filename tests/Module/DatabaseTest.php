@@ -1,6 +1,6 @@
 <?php
 
-namespace Codeception\Module\Portrino\Tests;
+namespace Portrino\Codeception\Tests\Module;
 
 /*
  * This file is part of the Codeception Sitemap Module project
@@ -14,13 +14,13 @@ namespace Codeception\Module\Portrino\Tests;
  *
  */
 
-use Codeception\Module\Portrino\Database;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
+use Portrino\Codeception\Module\Database;
 
 /**
  * Class DatabaseTest
- * @package Codeception\Module\Portrino\Tests
+ * @package Portrino\Codeception\Tests\Module
  */
 class DatabaseTest extends TestCase
 {

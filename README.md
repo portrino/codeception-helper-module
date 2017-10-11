@@ -30,7 +30,7 @@ enabled modules in your codeception suite configurations.
 ```yml
 modules:
     enabled:
-        - \Codeception\Module\Portrino\Database:
+        - \Portrino\Codeception\Module\Database:
             depends: Db
  ```  
  
@@ -66,12 +66,12 @@ You should use our constants for the database tables of the corresponding system
 
 #### TYPO3
 
-``\Codeception\Module\Portrino\DatabaseTables\Typo3``
+``\Portrino\Codeception\Interfaces\DatabaseTables\Typo3``
 
 Example:
 ```php
   $I->seeInDatabase(
-        \Codeception\Module\Portrino\DatabaseTables\Typo3::PAGES,
+        \Portrino\Codeception\Interfaces\DatabaseTables\Typo3::PAGES,
         [
             'uid' => 123,
         ]
@@ -80,11 +80,11 @@ Example:
 
 #### Shopware
 
-``\Codeception\Module\Portrino\DatabaseTables\Shopware``
+``\Portrino\Codeception\Interfaces\DatabaseTables\Shopware``
 
 ```php
   $I->seeInDatabase(
-        \Codeception\Module\Portrino\DatabaseTables\Shopware::ARTICLE,
+        \Portrino\Codeception\Interfaces\DatabaseTables\Shopware::ARTICLE,
         [
             'id' => 123,
         ]

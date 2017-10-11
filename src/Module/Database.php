@@ -1,6 +1,6 @@
 <?php
 
-namespace Codeception\Module\Portrino;
+namespace Portrino\Codeception\Module;
 
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
@@ -8,7 +8,7 @@ use Codeception\Module\Db;
 
 /**
  * Class Database
- * @package Codeception\Module\Portrino
+ * @package Portrino\Codeception\Module
  */
 class Database extends Module implements DependsOnModule
 {
