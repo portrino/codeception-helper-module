@@ -40,6 +40,27 @@ class Database extends Module implements DependsOnModule
         $this->db = $db;
     }
 
+
+    /**
+     * @param string $name
+     * @return string
+     * @codeCoverageIgnore
+     */
+    protected function getQuotedName($name)
+    {
+        return $this->db->driver->getQuotedName($name);
+    }
+
+    /**
+     * @param string $query
+     * @param array $params
+     * @codeCoverageIgnore
+     */
+    protected function executeQuery($query, $params = [])
+    {
+        $this->db->driver->executeQuery($query, $params);
+    }
+
     /**
      * Truncate table in database
      * Use: $I->truncateTableInDatabase('users');
@@ -55,20 +76,15 @@ class Database extends Module implements DependsOnModule
     }
 
     /**
-     * @param string $name
-     * @return string
+     * Delete entries from $table where $criteria conditions
+     * Use: $I->deleteFromDatabase('users', ['id' => '111111', 'banned' => 'yes']);
+     *
+     * @param  string $table tablename
+     * @param  array $criteria conditions. See seeInDatabase() method.
+     * @codeCoverageIgnore
      */
-    protected function getQuotedName($name)
+    public function deleteFromDatabase($table, $criteria)
     {
-        return $this->db->driver->getQuotedName($name);
-    }
-
-    /**
-     * @param string $query
-     * @param array $params
-     */
-    protected function executeQuery($query, $params = [])
-    {
-        $this->db->driver->executeQuery($query, $params);
+        $this->db->driver->deleteQueryByCriteria($table, $criteria);
     }
 }
