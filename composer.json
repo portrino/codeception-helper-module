@@ -1,5 +1,5 @@
 {
-    "name": "portrino/codeception-sitemap-module",
+    "name": "portrino/codeception-helper-module",
     "description": "Generic helper module for codeception acceptance testing",
     "authors": [
         {

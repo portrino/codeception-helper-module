@@ -21,9 +21,7 @@ class Database extends Db
     public function truncateTableInDatabase($table)
     {
         $query = 'TRUNCATE %s';
-
-        $query = sprintf($query, $table);
         $this->debugSection('Query', $query);
-        $this->driver->executeQuery($query, []);
+        $this->driver->executeQuery($query, [$table]);
     }
 }
