@@ -61,7 +61,7 @@ class TaskResult
     {
         $result = new TaskResult();
         $result->statusString = $statusString;
-        if ((int)$statusString === 0) {
+        if ($statusString === 0) {
             $result->status = self::STATUS_SUCCESS;
         } else {
             $result->status = self::STATUS_ERROR;
