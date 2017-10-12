@@ -82,7 +82,7 @@ class SchedulerTest extends TestCase
         $this->scheduler
             ->expects(static::any())
             ->method('execute')
-            ->willReturn($execute);
+            ->willReturn(TaskResult::fromStatusString($execute));
 
         static::assertEquals($run, $this->scheduler->run($task));
     }

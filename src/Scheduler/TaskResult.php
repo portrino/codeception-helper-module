@@ -54,7 +54,7 @@ class TaskResult
     }
 
     /**
-     * @param string $statusString
+     * @param mixed $statusString
      * @return TaskResult
      */
     public static function fromStatusString($statusString)
