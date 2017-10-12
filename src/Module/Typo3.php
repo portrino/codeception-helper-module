@@ -14,9 +14,12 @@ namespace Portrino\Codeception\Module;
  *
  */
 
+use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
+use Codeception\Module\Asserts;
 use Codeception\TestInterface;
+use Portrino\Codeception\Interfaces\Commands\Typo3Command;
 use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
@@ -25,8 +28,18 @@ use Symfony\Component\Process\ProcessBuilder;
  * Class Typo3
  * @package Portrino\Codeception\Module
  */
-class Typo3 extends Module
+class Typo3 extends Module implements DependsOnModule
 {
+    /**
+     * @var string
+     */
+    protected $dependencyMessage = '"Asserts" module is required.';
+
+    /**
+     * @var Asserts
+     */
+    protected $asserts;
+
     /**
      * @var array
      */
@@ -68,25 +81,27 @@ class Typo3 extends Module
     }
 
     /**
+     * @return array
+     * @codeCoverageIgnore
+     */
+    public function _depends()
+    {
+        return [Asserts::class => $this->dependencyMessage];
+    }
+
+    /**
      * **HOOK** executed before suite
      *
      * @param array $settings
      */
     public function _beforeSuite($settings = [])
     {
-        $this->builder->setArguments(
+        $this->executeCommand(
+            Typo3Command::DATABASE_UPDATE_SCHEMA,
             [
-                'database:updateschema',
                 '*.add,*.change'
             ]
         );
-        $this->builder->getProcess()->run(function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                $this->debugSection('ERR > ', $buffer);
-            } else {
-                $this->debug($buffer);
-            }
-        });
     }
 
     /**
@@ -100,16 +115,93 @@ class Typo3 extends Module
         $input = new InputStream();
         $sql = file_get_contents($file);
         $input->write($sql);
-
-        $this->builder->setInput($input);
-        $this->builder->setArguments(
-            [
-                'database:import',
-            ]
-        );
-
-        $process = $this->builder->getProcess();
+        $process = $this->builder->add('database:import')->setInput($input)->getProcess();
+        $this->debugSection('Execute', $process->getCommandLine());
         $process->start();
         $input->close();
+    }
+
+    /**
+     * @param string $command
+     * @param array $arguments
+     * @param array $environmentVariables
+     * @return int
+     */
+    public function executeCommand($command, $arguments = [], $environmentVariables = [])
+    {
+        $process = $this->builder
+            ->add($command)
+            ->setArguments($arguments)
+            ->addEnvironmentVariables($environmentVariables)
+            ->getProcess();
+
+        $this->debugSection('Execute', $process->getCommandLine());
+
+        $result = (bool)$process->run(function ($type, $buffer) {
+            if (Process::ERR === $type) {
+                $this->debugSection('Error', $buffer);
+            } else {
+                $this->debugSection('Success', $buffer);
+            }
+        });
+
+        $this->asserts->assertTrue($result);
+    }
+
+    /**
+     * execute scheduler task
+     *
+     * @param int $taskId Uid of the task that should be executed (instead of all scheduled tasks)
+     * @param bool $force The execution can be forced with this flag. The task will then be executed even if it is not
+     *                    scheduled for execution yet. Only works, when a task is specified.
+     * @param array $environmentVariables
+     */
+    public function executeSchedulerTask($taskId, $force = false, $environmentVariables = [])
+    {
+        $this->executeCommand(
+            Typo3Command::SCHEDULER_RUN,
+            [
+                'task-id' => $taskId,
+                'force' => $force
+            ],
+            $environmentVariables
+        );
+    }
+
+    /**
+     * flush cache
+     *
+     * @param bool $force
+     * @param bool $filesOnly
+     */
+    public function flushCache($force = false, $filesOnly = false)
+    {
+        $this->executeCommand(
+            Typo3Command::CACHE_FLUSH,
+            [
+                'force' => $force,
+                'files-only' => $filesOnly
+            ]
+        );
+    }
+
+    /**
+     * flush cache by group:
+     *
+     * all
+     * lowlevel
+     * pages
+     * system
+     *
+     * @param string $groups comma sep string (e.g.: pages, all)
+     */
+    public function flushCacheGroups($groups)
+    {
+        $this->executeCommand(
+            Typo3Command::CACHE_FLUSH_GROUPS,
+            [
+                'groups' => $groups
+            ]
+        );
     }
 }
