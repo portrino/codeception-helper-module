@@ -33,7 +33,7 @@ class Typo3FrontendUser extends AbstractModel
     /**
      * @var string
      */
-    public $saluation = null;
+    public $salutation = null;
 
     /**
      * @var string
