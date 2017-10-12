@@ -41,8 +41,7 @@ modules:
 modules:
     enabled:
         - \Portrino\Codeception\Module\Typo3:
-            depends: Db
-            domain: %CODECEPT_DOMAIN%
+            domain: www.example.com
  ```  
 
 Update codeception build
