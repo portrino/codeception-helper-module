@@ -3,7 +3,7 @@
 namespace Portrino\Codeception\Tests\Module;
 
 /*
- * This file is part of the Codeception Sitemap Module project
+ * This file is part of the Codeception Helper Module project
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
