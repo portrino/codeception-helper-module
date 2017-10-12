@@ -25,15 +25,26 @@ You need to add the repository into your composer.json file
 You can use this module as any other Codeception module, by adding '\Codeception\Module\Portrino\Database' to the 
 enabled modules in your codeception suite configurations.
 
-### Enable module
+### Enable database module
 
 ```yml
 modules:
     enabled:
         - \Portrino\Codeception\Module\Database:
             depends: Db
+            no_reset: true # do not reset database after testsuite
  ```  
  
+### Enable typo3 module
+
+ ```yml
+modules:
+    enabled:
+        - \Portrino\Codeception\Module\Typo3:
+            depends: Db
+            domain: %CODECEPT_DOMAIN%
+ ```  
+
 Update codeception build
    
 ```bash

@@ -35,6 +35,13 @@ class Database extends Module implements DependsOnModule
     protected $db;
 
     /**
+     * @var array
+     */
+    protected $config = [
+        'no_reset' => false
+    ];
+
+    /**
      * @return array
      * @codeCoverageIgnore
      */
@@ -98,5 +105,15 @@ class Database extends Module implements DependsOnModule
     public function deleteFromDatabase($table, $criteria)
     {
         $this->db->driver->deleteQueryByCriteria($table, $criteria);
+    }
+
+    /**
+     * **HOOK** executed after suite
+     */
+    public function _afterSuite()
+    {
+        if (!$this->config['no_reset']) {
+            $this->db->_beforeSuite([]);
+        }
     }
 }
