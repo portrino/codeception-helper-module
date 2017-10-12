@@ -20,6 +20,7 @@ use Portrino\Codeception\Module\Database;
 
 /**
  * Class DatabaseTest
+ *
  * @package Portrino\Codeception\Tests\Module
  */
 class DatabaseTest extends TestCase
@@ -39,7 +40,9 @@ class DatabaseTest extends TestCase
      */
     public function truncateTableInDatabase()
     {
-        /** @var Database|PHPUnit_Framework_MockObject_MockObject $database */
+        /**
+ * @var Database|PHPUnit_Framework_MockObject_MockObject $database 
+*/
         $database = $this->getMockBuilder(Database::class)
             ->setMethods(
                 [

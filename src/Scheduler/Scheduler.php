@@ -55,7 +55,7 @@ class Scheduler
             $arguments
         );
         $this->lastTaskResult = TaskResult::fromStatusString(
-            shell_exec($cmd)
+            $this->execute($cmd)
         );
         $this->lastTaskResult->task = $task;
         return $this;
