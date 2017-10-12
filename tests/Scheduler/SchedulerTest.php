@@ -22,6 +22,7 @@ use Portrino\Codeception\Scheduler\TaskResult;
 
 /**
  * Class SchedulerTest
+ *
  * @package Portrino\Codeception\Tests\Scheduler
  */
 class SchedulerTest extends TestCase
@@ -112,7 +113,7 @@ class SchedulerTest extends TestCase
         $this->taskResult
             ->expects(static::any())
             ->method('isSuccessful')
-            ->willReturn(True);
+            ->willReturn(true);
 
 
         $this->scheduler
