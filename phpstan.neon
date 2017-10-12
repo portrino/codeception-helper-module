@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::amOnPage\(\)#'
         - '#Call to an undefined method PHPUnit_Framework_MockObject_MockObject::[a-zA-Z0-9_]+\(\)#'
+        - '#Class PHPUnit_Framework_Test not found and could not be autoloaded.#'

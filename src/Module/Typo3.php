@@ -14,10 +14,8 @@ namespace Portrino\Codeception\Module;
  *
  */
 
-use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
-use Codeception\Module\Db;
 use Codeception\TestInterface;
 use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
@@ -27,18 +25,8 @@ use Symfony\Component\Process\ProcessBuilder;
  * Class Typo3
  * @package Portrino\Codeception\Module
  */
-class Typo3 extends Module implements DependsOnModule
+class Typo3 extends Module
 {
-    /**
-     * @var string
-     */
-    protected $dependencyMessage = 'Db module is required.';
-
-    /**
-     * @var Db
-     */
-    protected $db;
-
     /**
      * @var array
      */
@@ -77,25 +65,6 @@ class Typo3 extends Module implements DependsOnModule
         $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
         $this->builder = new ProcessBuilder();
         $this->builder->setPrefix($this->typo3cmsPath);
-    }
-
-
-    /**
-     * @return array
-     * @codeCoverageIgnore
-     */
-    public function _depends()
-    {
-        return [Db::class => $this->dependencyMessage];
-    }
-
-    /**
-     * @param Db $db
-     * @codeCoverageIgnore
-     */
-    public function _inject(Db $db)
-    {
-        $this->db = $db;
     }
 
     /**
