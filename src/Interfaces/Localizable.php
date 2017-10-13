@@ -15,6 +15,7 @@ namespace Portrino\Codeception\Interfaces;
 
 /**
  * Interface LocalizedPage
+ *
  * @package Portrino\Codeception\Interfaces
  */
 interface Localizable

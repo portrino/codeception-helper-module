@@ -26,6 +26,7 @@ use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class Typo3
+ *
  * @package Portrino\Codeception\Module
  */
 class Typo3 extends Module implements DependsOnModule
@@ -68,7 +69,7 @@ class Typo3 extends Module implements DependsOnModule
      * Requires module container (to provide access between modules of suite) and config.
      *
      * @param ModuleContainer $moduleContainer
-     * @param null $config
+     * @param null            $config
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
@@ -116,7 +117,9 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function _before(TestInterface $test)
     {
-        /** @var ProcessBuilder $builder */
+        /**
+ * @var ProcessBuilder $builder 
+*/
         $builder = new ProcessBuilder();
         $builder->setPrefix($this->typo3cmsPath);
 
@@ -143,12 +146,14 @@ class Typo3 extends Module implements DependsOnModule
 
     /**
      * @param string $command
-     * @param array $arguments
-     * @param array $environmentVariables
+     * @param array  $arguments
+     * @param array  $environmentVariables
      */
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
-        /** @var ProcessBuilder $builder */
+        /**
+ * @var ProcessBuilder $builder 
+*/
         $builder = $this->createBuilder();
         $builder->setPrefix($this->typo3cmsPath);
 
@@ -174,9 +179,9 @@ class Typo3 extends Module implements DependsOnModule
     /**
      * execute scheduler task
      *
-     * @param int $taskId Uid of the task that should be executed (instead of all scheduled tasks)
-     * @param bool $force The execution can be forced with this flag. The task will then be executed even if it is not
-     *                    scheduled for execution yet. Only works, when a task is specified.
+     * @param int   $taskId               Uid of the task that should be executed (instead of all scheduled tasks)
+     * @param bool  $force                The execution can be forced with this flag. The task will then be executed even if it is not
+     *                                    scheduled for execution yet. Only works, when a task is specified.
      * @param array $environmentVariables
      */
     public function executeSchedulerTask($taskId, $force = false, $environmentVariables = [])

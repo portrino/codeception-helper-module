@@ -15,6 +15,7 @@ namespace Portrino\Codeception\Interfaces\DatabaseTables;
 
 /**
  * Interface Typo3Database
+ *
  * @package Portrino\Codeception\Interfaces\DatabaseTables
  */
 interface Typo3Database

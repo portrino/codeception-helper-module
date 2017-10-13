@@ -15,6 +15,7 @@ namespace Portrino\Codeception\Interfaces\Cookies;
 
 /**
  * Interface Typo3Cookie
+ *
  * @package Portrino\Codeception\Interfaces\Cookies
  */
 interface Typo3Cookie

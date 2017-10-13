@@ -17,6 +17,7 @@ use Portrino\Codeception\Interfaces\Localizable;
 
 /**
  * Interface LocalizedPage
+ *
  * @package Portrino\Codeception\Interfaces\Page
  */
 interface LocalizedPage extends Localizable

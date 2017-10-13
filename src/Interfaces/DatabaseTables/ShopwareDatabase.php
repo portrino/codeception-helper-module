@@ -15,6 +15,7 @@ namespace Portrino\Codeception\Interfaces\DatabaseTables;
 
 /**
  * Interface ShopwareDatabase
+ *
  * @package Portrino\Codeception\Interfaces\DatabaseTables
  */
 interface ShopwareDatabase

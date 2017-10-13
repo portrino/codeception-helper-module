@@ -15,6 +15,7 @@ namespace Portrino\Codeception\Interfaces\Commands;
 
 /**
  * Interface Typo3Command
+ *
  * @package Portrino\Codeception\Interfaces\Commands
  */
 interface Typo3Command

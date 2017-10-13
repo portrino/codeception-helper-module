@@ -20,6 +20,7 @@ use Codeception\Module\Db;
 
 /**
  * Class Database
+ *
  * @package Portrino\Codeception\Module
  */
 class Database extends Module implements DependsOnModule
@@ -71,7 +72,7 @@ class Database extends Module implements DependsOnModule
 
     /**
      * @param string $query
-     * @param array $params
+     * @param array  $params
      * @codeCoverageIgnore
      */
     protected function executeQuery($query, $params = [])
@@ -83,7 +84,7 @@ class Database extends Module implements DependsOnModule
      * Truncate table in database
      * Use: $I->truncateTableInDatabase('users');
      *
-     * @param  string $table
+     * @param string $table
      */
     public function truncateTableInDatabase($table)
     {
@@ -97,8 +98,8 @@ class Database extends Module implements DependsOnModule
      * Delete entries from $table where $criteria conditions
      * Use: $I->deleteFromDatabase('users', ['id' => '111111', 'banned' => 'yes']);
      *
-     * @param  string $table tablename
-     * @param  array $criteria conditions. See seeInDatabase() method.
+     * @param              string $table    tablename
+     * @param              array  $criteria conditions. See seeInDatabase() method.
      * @codeCoverageIgnore
      */
     public function deleteFromDatabase($table, $criteria)

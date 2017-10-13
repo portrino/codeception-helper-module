@@ -17,6 +17,7 @@ use Codeception\Actor;
 
 /**
  * Class BasePage
+ *
  * @package Portrino\Codeception\Page
  */
 abstract class BasePage

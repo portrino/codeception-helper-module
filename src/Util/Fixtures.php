@@ -16,6 +16,7 @@ namespace Portrino\Codeception\Util;
 
 /**
  * Class Fixtures
+ *
  * @package Portrino\Codeception\Util
  */
 class Fixtures extends \Codeception\Util\Fixtures

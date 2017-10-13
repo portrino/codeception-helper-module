@@ -15,6 +15,7 @@ namespace Portrino\Codeception\Model;
 
 /**
  * Class AbstractFixture
+ *
  * @package Portrino\Codeception\Model
  */
 abstract class AbstractModel

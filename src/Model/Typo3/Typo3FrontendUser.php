@@ -17,6 +17,7 @@ use Portrino\Codeception\Model\AbstractModel;
 
 /**
  * Class Typo3FrontendUser
+ *
  * @package Portrino\Codeception\Model\Typo3
  */
 class Typo3FrontendUser extends AbstractModel

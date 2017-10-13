@@ -25,6 +25,7 @@ use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class Typo3Test
+ *
  * @package Portrino\Codeception\Tests\Module
  */
 class Typo3Test extends TestCase
@@ -154,7 +155,8 @@ class Typo3Test extends TestCase
             ->setArguments(
                 [
                     Typo3Command::DATABASE_UPDATE_SCHEMA
-                ])
+                ]
+            )
             ->getProcess()
             ->getCommandLine();
 
@@ -270,7 +272,8 @@ class Typo3Test extends TestCase
             ->setArguments(
                 [
                     Typo3Command::DATABASE_UPDATE_SCHEMA
-                ])
+                ]
+            )
             ->getProcess()
             ->getCommandLine();
 

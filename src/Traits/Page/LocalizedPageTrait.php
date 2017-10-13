@@ -18,6 +18,7 @@ use Portrino\Codeception\Traits\LocalizableTrait;
 
 /**
  * Trait LocalizedPageTrait
+ *
  * @package Portrino\Codeception\Traits\Page
  */
 trait LocalizedPageTrait
