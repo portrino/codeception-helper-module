@@ -112,6 +112,14 @@ Flushes all caches in specified groups. Valid group names are by default:
 $I->flushCacheGroups($groups)
 ```
 
+#### importIntoDatabase
+
+Import $file into database. 
+
+```php
+$I->importIntoDatabase($file)
+```
+
 ### Interfaces
 
 You should use our constants defined in some interfaces to prevent typos and make refactoring easier.
