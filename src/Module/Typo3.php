@@ -161,10 +161,12 @@ class Typo3 extends Module implements DependsOnModule
         $builder->setPrefix($this->typo3cmsPath);
 
         array_unshift($arguments, $command);
-        $process = $builder
-            ->setArguments($arguments)
-            ->addEnvironmentVariables($environmentVariables)
-            ->getProcess();
+
+        $builder->setArguments($arguments);
+        if (count($environmentVariables) > 0) {
+            $builder->addEnvironmentVariables($environmentVariables);
+        }
+        $process = $builder->getProcess();
 
         $this->debugSection('Execute', $process->getCommandLine());
 
