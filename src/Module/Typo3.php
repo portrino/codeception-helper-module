@@ -118,20 +118,25 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function _before(TestInterface $test)
     {
+        $file = 'tests/_data/dynamic/sys_domain/' . (string)$this->config['domain'] . '.sql';
+        $this->importIntoDatabase($file);
+    }
+
+    /**
+     * @param string $file
+     */
+    public function importIntoDatabase($file)
+    {
         /** @var ProcessBuilder $builder */
         $builder = new ProcessBuilder();
         $builder->setPrefix($this->typo3cmsPath);
-
-        $file = 'tests/_data/dynamic/sys_domain/' . (string)$this->config['domain'] . '.sql';
         $input = new InputStream();
         $sql = file_get_contents($file);
         $input->write($sql);
-        $process = $builder->add('database:import')->setInput($input)->getProcess();
+        $process = $builder->add(Typo3Command::DATABASE_IMPORT)->setInput($input)->getProcess();
         $this->debugSection('Execute', $process->getCommandLine());
         $process->start();
-
         $input->close();
-
         $process->wait();
     }
 

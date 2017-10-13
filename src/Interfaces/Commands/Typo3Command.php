@@ -23,6 +23,7 @@ interface Typo3Command
     const CACHE_FLUSH = 'cache:flush';
     const CACHE_FLUSH_GROUPS = 'cache:flushgroups';
 
+    const DATABASE_IMPORT = 'database:import';
     const DATABASE_UPDATE_SCHEMA = 'database:updateschema';
 
     const SCHEDULER_RUN = 'scheduler:run';
