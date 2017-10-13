@@ -118,7 +118,7 @@ class Typo3 extends Module implements DependsOnModule
     public function _before(TestInterface $test)
     {
         /**
- * @var ProcessBuilder $builder 
+ * @var ProcessBuilder $builder
 */
         $builder = new ProcessBuilder();
         $builder->setPrefix($this->typo3cmsPath);
@@ -152,7 +152,7 @@ class Typo3 extends Module implements DependsOnModule
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
         /**
- * @var ProcessBuilder $builder 
+ * @var ProcessBuilder $builder
 */
         $builder = $this->createBuilder();
         $builder->setPrefix($this->typo3cmsPath);
