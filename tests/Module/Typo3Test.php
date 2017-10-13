@@ -365,4 +365,27 @@ class Typo3Test extends TestCase
 
         $this->typo3->flushCacheGroups('pages, system');
     }
+
+    /**
+     * @test
+     */
+    public function beforeSuite()
+    {
+        $this->typo3 = $this
+            ->getMockBuilder(Typo3::class)
+            ->setMethods(
+                [
+                    'executeCommand'
+                ]
+            )
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->typo3
+            ->expects(static::once())
+            ->method('executeCommand')
+            ->with(Typo3Command::DATABASE_UPDATE_SCHEMA, ['*.add,*.change']);
+
+        $this->typo3->_beforeSuite('*.add,*.change');
+    }
 }

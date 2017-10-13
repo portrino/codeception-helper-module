@@ -20,7 +20,7 @@ use Portrino\Codeception\Util\Fixtures;
 
 /**
  * Class FixturesTest
- * @package Portrino\Codeception\Tests\Module
+ * @package Portrino\Codeception\Tests\Util
  */
 class FixturesTest extends TestCase
 {
