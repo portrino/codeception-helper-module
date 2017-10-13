@@ -137,7 +137,6 @@ class Typo3 extends Module implements DependsOnModule
      * @param string $command
      * @param array $arguments
      * @param array $environmentVariables
-     * @return int
      */
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
