@@ -41,7 +41,7 @@ class DatabaseTest extends TestCase
     public function truncateTableInDatabase()
     {
         /**
- * @var Database|PHPUnit_Framework_MockObject_MockObject $database 
+ * @var Database|PHPUnit_Framework_MockObject_MockObject $database
 */
         $database = $this->getMockBuilder(Database::class)
             ->setMethods(
