@@ -70,6 +70,7 @@ class Typo3 extends Module implements DependsOnModule
      *
      * @param ModuleContainer $moduleContainer
      * @param null            $config
+     * @codeCoverageIgnore
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
@@ -117,9 +118,7 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function _before(TestInterface $test)
     {
-        /**
- * @var ProcessBuilder $builder
-*/
+        /** @var ProcessBuilder $builder */
         $builder = new ProcessBuilder();
         $builder->setPrefix($this->typo3cmsPath);
 
@@ -138,6 +137,7 @@ class Typo3 extends Module implements DependsOnModule
 
     /**
      * @return ProcessBuilder
+     * @codeCoverageIgnore
      */
     protected function createBuilder()
     {
@@ -151,9 +151,7 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
-        /**
- * @var ProcessBuilder $builder
-*/
+        /** @var ProcessBuilder $builder */
         $builder = $this->createBuilder();
         $builder->setPrefix($this->typo3cmsPath);
 

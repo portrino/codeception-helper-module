@@ -109,6 +109,7 @@ class Database extends Module implements DependsOnModule
 
     /**
      * **HOOK** executed after suite
+     * @codeCoverageIgnore
      */
     public function _afterSuite()
     {
