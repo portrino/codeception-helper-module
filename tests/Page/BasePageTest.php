@@ -18,7 +18,9 @@ use Codeception\Actor;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Portrino\Codeception\Tests\Fixture\AcceptanceTester;
+use Portrino\Codeception\Tests\Fixture\AcceptanceTesterThrowException;
 use Portrino\Codeception\Tests\Fixture\LoginPage;
+use Portrino\Codeception\Tests\Fixture\LoginPageThrowException;
 
 /**
  * Class BasePageTest
@@ -35,6 +37,11 @@ class BasePageTest extends TestCase
      * @var LoginPage|PHPUnit_Framework_MockObject_MockObject
      */
     protected $loginPage;
+
+    /**
+     * @var LoginPageThrowException|PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $loginPageThrowException;
 
     /**
      * @test
@@ -57,5 +64,26 @@ class BasePageTest extends TestCase
 
         $this->loginPage = new LoginPage($tester);
         $this->loginPage->open();
+    }
+
+    /**
+     * @test
+     * @expectedException \Exception
+     */
+    public function openThrowException()
+    {
+        /** @var AcceptanceTesterThrowException|PHPUnit_Framework_MockObject_MockObject $exceptionTester */
+        $exceptionTester = $this
+            ->getMockBuilder(AcceptanceTesterThrowException::class)
+            ->disableOriginalConstructor()
+            ->setMethods(
+                [
+                    'dummy'
+                ]
+            )
+            ->getMock();
+
+        $this->loginPageThrowException = new LoginPageThrowException($exceptionTester);
+        $this->loginPageThrowException->open();
     }
 }
