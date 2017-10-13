@@ -152,7 +152,7 @@ class Typo3 extends Module implements DependsOnModule
 
         $this->debugSection('Execute', $process->getCommandLine());
 
-        $result = $process->run();
+        $process->run();
 
         if ($process->isSuccessful()) {
             $this->debugSection('Success', $process->getOutput());
@@ -160,7 +160,7 @@ class Typo3 extends Module implements DependsOnModule
             $this->debugSection('Error', $process->getErrorOutput());
         }
 
-        $this->asserts->assertEquals($result, self::EXIT_STATUS_SUCCESS);
+        $this->asserts->assertTrue($process->isSuccessful());
     }
 
     /**
