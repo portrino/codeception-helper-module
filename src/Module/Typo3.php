@@ -30,6 +30,9 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class Typo3 extends Module implements DependsOnModule
 {
+    const EXIT_STATUS_SUCCESS = 0;
+    const EXIT_STATUS_FAILED = 1;
+
     /**
      * @var string
      */
@@ -90,6 +93,15 @@ class Typo3 extends Module implements DependsOnModule
     }
 
     /**
+     * @param Asserts $assert
+     * @codeCoverageIgnore
+     */
+    public function _inject(Asserts $asserts)
+    {
+        $this->asserts = $asserts;
+    }
+
+    /**
      * **HOOK** executed before suite
      *
      * @param array $settings
@@ -129,23 +141,22 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
+        array_unshift($arguments, $command);
         $process = $this->builder
-            ->add($command)
             ->setArguments($arguments)
             ->addEnvironmentVariables($environmentVariables)
             ->getProcess();
 
         $this->debugSection('Execute', $process->getCommandLine());
 
-        $result = (bool)$process->run(function ($type, $buffer) {
+        $result = $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
                 $this->debugSection('Error', $buffer);
             } else {
                 $this->debugSection('Success', $buffer);
             }
         });
-
-        $this->asserts->assertTrue($result);
+        $this->asserts->assertEquals($result, self::EXIT_STATUS_SUCCESS);
     }
 
     /**

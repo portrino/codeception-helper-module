@@ -59,7 +59,6 @@ class Database extends Module implements DependsOnModule
         $this->db = $db;
     }
 
-
     /**
      * @param string $name
      * @return string
