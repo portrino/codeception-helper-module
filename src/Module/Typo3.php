@@ -73,7 +73,6 @@ class Typo3 extends Module implements DependsOnModule
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
         parent::__construct($moduleContainer, $config);
-        $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
     }
 
     /**
@@ -92,6 +91,7 @@ class Typo3 extends Module implements DependsOnModule
     public function _inject(Asserts $asserts)
     {
         $this->asserts = $asserts;
+        $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
     }
 
     /**
@@ -134,6 +134,14 @@ class Typo3 extends Module implements DependsOnModule
     }
 
     /**
+     * @return ProcessBuilder
+     */
+    protected function createBuilder()
+    {
+        return new ProcessBuilder();
+    }
+
+    /**
      * @param string $command
      * @param array $arguments
      * @param array $environmentVariables
@@ -141,7 +149,7 @@ class Typo3 extends Module implements DependsOnModule
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
         /** @var ProcessBuilder $builder */
-        $builder = new ProcessBuilder();
+        $builder = $this->createBuilder();
         $builder->setPrefix($this->typo3cmsPath);
 
         array_unshift($arguments, $command);
