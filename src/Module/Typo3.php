@@ -63,11 +63,6 @@ class Typo3 extends Module implements DependsOnModule
     protected $typo3cmsPath;
 
     /**
-     * @var ProcessBuilder
-     */
-    protected $builder;
-
-    /**
      * Module constructor.
      *
      * Requires module container (to provide access between modules of suite) and config.
@@ -79,8 +74,6 @@ class Typo3 extends Module implements DependsOnModule
     {
         parent::__construct($moduleContainer, $config);
         $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
-        $this->builder = new ProcessBuilder();
-        $this->builder->setPrefix($this->typo3cmsPath);
     }
 
     /**
@@ -123,14 +116,21 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function _before(TestInterface $test)
     {
+        /** @var ProcessBuilder $builder */
+        $builder = new ProcessBuilder();
+        $builder->setPrefix($this->typo3cmsPath);
+
         $file = 'tests/_data/dynamic/sys_domain/' . (string)$this->config['domain'] . '.sql';
         $input = new InputStream();
         $sql = file_get_contents($file);
         $input->write($sql);
-        $process = $this->builder->add('database:import')->setInput($input)->getProcess();
+        $process = $builder->add('database:import')->setInput($input)->getProcess();
         $this->debugSection('Execute', $process->getCommandLine());
         $process->start();
+
         $input->close();
+
+        $process->wait();
     }
 
     /**
@@ -140,21 +140,26 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
+        /** @var ProcessBuilder $builder */
+        $builder = new ProcessBuilder();
+        $builder->setPrefix($this->typo3cmsPath);
+
         array_unshift($arguments, $command);
-        $process = $this->builder
+        $process = $builder
             ->setArguments($arguments)
             ->addEnvironmentVariables($environmentVariables)
             ->getProcess();
 
         $this->debugSection('Execute', $process->getCommandLine());
 
-        $result = $process->run(function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                $this->debugSection('Error', $buffer);
-            } else {
-                $this->debugSection('Success', $buffer);
-            }
-        });
+        $result = $process->run();
+
+        if ($process->isSuccessful()) {
+            $this->debugSection('Success', $process->getOutput());
+        } else {
+            $this->debugSection('Error', $process->getErrorOutput());
+        }
+
         $this->asserts->assertEquals($result, self::EXIT_STATUS_SUCCESS);
     }
 
