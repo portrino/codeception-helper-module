@@ -25,6 +25,14 @@ composer require --dev portrino/codeception-helper-module
 You can use module(s) as any other codeception module, by adding '\Codeception\Module\Portrino\******' to the 
 enabled modules in your codeception suite configurations.
 
+**Please notice:** 
+
+if you are using Shopware, 
+you have to require_once the Shopware autoloader in your _bootstrap file
+```php
+require_once(__DIR__ . '/../../../../web/autoload.php');
+```
+
 ### Database module
 
 ```yml
