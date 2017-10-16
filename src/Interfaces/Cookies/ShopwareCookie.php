@@ -20,6 +20,5 @@ namespace Portrino\Codeception\Interfaces\Cookies;
  */
 interface ShopwareCookie
 {
-   const SHOPWARE_SESSION_COOKIE = 'session-1';
+    const SHOPWARE_SESSION_COOKIE = 'session-1';
 }
-
