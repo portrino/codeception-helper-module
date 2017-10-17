@@ -25,14 +25,6 @@ composer require --dev portrino/codeception-helper-module
 You can use module(s) as any other codeception module, by adding '\Codeception\Module\Portrino\******' to the 
 enabled modules in your codeception suite configurations.
 
-**Please notice:** 
-
-if you are using Shopware, 
-you have to require_once the Shopware autoloader in your _bootstrap file
-```php
-require_once(__DIR__ . '/../../../../web/autoload.php');
-```
-
 ### Database module
 
 ```yml
@@ -160,3 +152,19 @@ Example:
         ]
   );
 ```
+
+## Hints
+
+### Use codeception with shopware
+
+Due the fact that shopware only supports some very old versions of packages like `guzzlehttp/guzzle` or `symfony/process`, 
+we advise you to put all the testing stuff into a indepented composer.json file under a seperate location like `web/tests/Codeception/`. Do not add `codeception\codeception` package into the root composer.json of shopware - you will get trouble.
+
+### Autoloading
+
+To autoload vendor packages you have to require_once the autoload.php in your composers `_bootstrap.php` file.
+
+```php
+require_once(__DIR__ . '/../../../../web/autoload.php');
+```
+
