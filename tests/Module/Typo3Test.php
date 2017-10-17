@@ -301,28 +301,6 @@ class Typo3Test extends TestCase
     /**
      * @test
      */
-    public function executeSchedulerTask()
-    {
-        $this->typo3 = $this
-            ->getMockBuilder(Typo3::class)
-            ->setMethods(
-                [
-                    'executeCommand'
-                ]
-            )
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->typo3
-            ->expects(static::once())
-            ->method('executeCommand')
-            ->with(Typo3Command::SCHEDULER_RUN, ['task-id' => 1, 'force' => true], ['foo' => 'bar']);
-        $this->typo3->executeSchedulerTask(1, true, ['foo' => 'bar']);
-    }
-
-    /**
-     * @test
-     */
     public function flushCache()
     {
         $this->typo3 = $this
