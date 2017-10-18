@@ -17,6 +17,7 @@ namespace Portrino\Codeception\Tests\Module\Typo3;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\Asserts;
 use Codeception\TestInterface;
+use Portrino\Codeception\Factory\ProcessBuilderFactory;
 use Portrino\Codeception\Interfaces\Commands\Typo3Command;
 use Portrino\Codeception\Module\Typo3;
 use Portrino\Codeception\Tests\Module\Typo3Test;
@@ -38,6 +39,7 @@ class BeforeTest extends Typo3Test
     {
         $this->container = $this->prophesize(ModuleContainer::class);
         $this->process = $this->prophesize(Process::class);
+        $this->processBuilderFactory = $this->prophesize(ProcessBuilderFactory::class);
         $this->builder = $this->prophesize(ProcessBuilder::class);
         $this->asserts = $this->prophesize(Asserts::class);
 
@@ -61,6 +63,8 @@ class BeforeTest extends Typo3Test
         $this->process->isSuccessful()->willReturn(true);
         $this->process->getOutput()->willReturn(self::DEBUG_SUCCESS);
 
+        $this->processBuilderFactory->getBuilder()->willReturn($this->builder);
+
         $this->typo3 = new Typo3(
             $this->container->reveal(),
             [
@@ -68,7 +72,7 @@ class BeforeTest extends Typo3Test
                 'data-dir' => __DIR__ . '/../../Fixture/data/'
             ]
         );
-        $this->typo3->setBuilder($this->builder->reveal());
+        $this->typo3->setProcessBuilderFactory($this->processBuilderFactory->reveal());
         $this->typo3->_inject($this->asserts->reveal());
     }
 

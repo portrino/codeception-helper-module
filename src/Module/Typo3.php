@@ -19,6 +19,7 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\Module\Asserts;
 use Codeception\TestInterface;
+use Portrino\Codeception\Factory\ProcessBuilderFactory;
 use Portrino\Codeception\Interfaces\Commands\Typo3Command;
 use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
@@ -45,9 +46,9 @@ class Typo3 extends Module implements DependsOnModule
     protected $asserts;
 
     /**
-     * @var ProcessBuilder
+     * @var ProcessBuilderFactory
      */
-    protected $builder;
+    protected $processBuilderFactory;
 
     /**
      * @var array
@@ -82,7 +83,7 @@ class Typo3 extends Module implements DependsOnModule
     {
         parent::__construct($moduleContainer, $config);
         $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
-        $this->builder = new ProcessBuilder();
+        $this->processBuilderFactory = new ProcessBuilderFactory();
     }
 
     /**
@@ -101,6 +102,14 @@ class Typo3 extends Module implements DependsOnModule
     public function _inject(Asserts $asserts)
     {
         $this->asserts = $asserts;
+    }
+
+    /**
+     * @param ProcessBuilderFactory $processBuilderFactory
+     */
+    public function setProcessBuilderFactory($processBuilderFactory)
+    {
+        $this->processBuilderFactory = $processBuilderFactory;
     }
 
     /**
@@ -141,25 +150,18 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function importIntoDatabase($file)
     {
-        $this->builder->setPrefix($this->typo3cmsPath);
+        $builder = $this->processBuilderFactory->getBuilder();
+        $builder->setPrefix($this->typo3cmsPath);
         $input = new InputStream();
         $sql = file_get_contents($file);
         $input->write($sql);
-        $this->builder->add(Typo3Command::DATABASE_IMPORT);
-        $this->builder->setInput($input);
-        $process = $this->builder->getProcess();
+        $builder->add(Typo3Command::DATABASE_IMPORT);
+        $builder->setInput($input);
+        $process = $builder->getProcess();
         $this->debugSection('Execute', $process->getCommandLine());
         $process->start();
         $input->close();
         $process->wait();
-    }
-
-    /**
-     * @param ProcessBuilder $builder
-     */
-    public function setBuilder($builder)
-    {
-        $this->builder = $builder;
     }
 
     /**
@@ -169,16 +171,18 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
-        $this->builder->setPrefix($this->typo3cmsPath);
+        $builder = $this->processBuilderFactory->getBuilder();
+
+        $builder->setPrefix($this->typo3cmsPath);
 
         array_unshift($arguments, $command);
         $arguments = array_map('strval', $arguments);
 
-        $this->builder->setArguments($arguments);
+        $builder->setArguments($arguments);
         if (count($environmentVariables) > 0) {
-            $this->builder->addEnvironmentVariables($environmentVariables);
+            $builder->addEnvironmentVariables($environmentVariables);
         }
-        $process = $this->builder->getProcess();
+        $process = $builder->getProcess();
 
         $this->debugSection('Execute', $process->getCommandLine());
 

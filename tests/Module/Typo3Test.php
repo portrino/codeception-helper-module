@@ -19,6 +19,7 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module\Asserts;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
+use Portrino\Codeception\Factory\ProcessBuilderFactory;
 use Portrino\Codeception\Interfaces\Commands\Typo3Command;
 use Portrino\Codeception\Module\Typo3;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -60,6 +61,11 @@ abstract class Typo3Test extends TestCase
      * @var Process|ObjectProphecy
      */
     protected $process;
+
+    /**
+     * @var ProcessBuilderFactory|ObjectProphecy
+     */
+    protected $processBuilderFactory;
 
     /**
      * @var Asserts|ObjectProphecy
