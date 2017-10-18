@@ -1,5 +1,10 @@
 parameters:
     ignoreErrors:
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::method\(\)#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::expects\(\)#'
+        - '#Access to an undefined property PHPUnit_Framework_MockObject_MockObject::\$[a-zA-Z0-9_]+#'
+        - '#Call to an undefined method PHPUnit_Framework_MockObject_MockObject::[a-zA-Z0-9_]+\(\)#'
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::amOnPage\(\)#'
         - '#Class PHPUnit_Framework_Test not found and could not be autoloaded.#'
-        - '#Call to an undefined method PHPUnit_Framework_MockObject_MockObject::[a-zA-Z0-9_]+\(\)#'
+        - '#Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy::[a-zA-Z0-9_]+\(\)#'
+    reportUnmatchedIgnoredErrors: false

@@ -45,6 +45,11 @@ class Typo3 extends Module implements DependsOnModule
     protected $asserts;
 
     /**
+     * @var ProcessBuilder
+     */
+    protected $builder;
+
+    /**
      * @var array
      */
     protected $requiredFields = [
@@ -55,7 +60,8 @@ class Typo3 extends Module implements DependsOnModule
      * @var array
      */
     protected $config = [
-        'bin-dir' => '../../../../../../bin/'
+        'bin-dir' => '../../../../../../bin/',
+        'data-dir' => 'tests/_data/'
     ];
 
     /**
@@ -69,12 +75,15 @@ class Typo3 extends Module implements DependsOnModule
      * Requires module container (to provide access between modules of suite) and config.
      *
      * @param ModuleContainer $moduleContainer
-     * @param null            $config
+     * @param ProcessBuilder  $builder
+     * @param null|array      $config
      * @codeCoverageIgnore
      */
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    public function __construct(ModuleContainer $moduleContainer, $builder, $config = null)
     {
+        $this->builder = $builder;
         parent::__construct($moduleContainer, $config);
+        $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
     }
 
     /**
@@ -93,7 +102,6 @@ class Typo3 extends Module implements DependsOnModule
     public function _inject(Asserts $asserts)
     {
         $this->asserts = $asserts;
-        $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
     }
 
     /**
@@ -118,7 +126,14 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function _before(TestInterface $test)
     {
-        $file = 'tests/_data/dynamic/sys_domain/' . (string)$this->config['domain'] . '.sql';
+        $file = vsprintf(
+            '%s/sys_domain/%s.sql',
+            [
+                $this->config['data-dir'],
+                $this->config['domain']
+            ]
+        );
+
         $this->importIntoDatabase($file);
     }
 
@@ -127,13 +142,13 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function importIntoDatabase($file)
     {
-        /** @var ProcessBuilder $builder */
-        $builder = new ProcessBuilder();
-        $builder->setPrefix($this->typo3cmsPath);
+        $this->builder->setPrefix($this->typo3cmsPath);
         $input = new InputStream();
         $sql = file_get_contents($file);
         $input->write($sql);
-        $process = $builder->add(Typo3Command::DATABASE_IMPORT)->setInput($input)->getProcess();
+        $this->builder->add(Typo3Command::DATABASE_IMPORT);
+        $this->builder->setInput($input);
+        $process = $this->builder->getProcess();
         $this->debugSection('Execute', $process->getCommandLine());
         $process->start();
         $input->close();
@@ -156,17 +171,16 @@ class Typo3 extends Module implements DependsOnModule
      */
     public function executeCommand($command, $arguments = [], $environmentVariables = [])
     {
-        /** @var ProcessBuilder $builder */
-        $builder = $this->createBuilder();
-        $builder->setPrefix($this->typo3cmsPath);
+        $this->builder->setPrefix($this->typo3cmsPath);
 
         array_unshift($arguments, $command);
+        $arguments = array_map('strval', $arguments);
 
-        $builder->setArguments($arguments);
+        $this->builder->setArguments($arguments);
         if (count($environmentVariables) > 0) {
-            $builder->addEnvironmentVariables($environmentVariables);
+            $this->builder->addEnvironmentVariables($environmentVariables);
         }
-        $process = $builder->getProcess();
+        $process = $this->builder->getProcess();
 
         $this->debugSection('Execute', $process->getCommandLine());
 
