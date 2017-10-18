@@ -63,12 +63,12 @@ class BeforeTest extends Typo3Test
 
         $this->typo3 = new Typo3(
             $this->container->reveal(),
-            $this->builder->reveal(),
             [
                 'domain' => 'www.example.com',
                 'data-dir' => __DIR__ . '/../../Fixture/data/'
             ]
         );
+        $this->typo3->setBuilder($this->builder->reveal());
         $this->typo3->_inject($this->asserts->reveal());
     }
 

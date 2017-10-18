@@ -61,7 +61,7 @@ class Typo3 extends Module implements DependsOnModule
      */
     protected $config = [
         'bin-dir' => '../../../../../../bin/',
-        'data-dir' => 'tests/_data/'
+        'data-dir' => 'tests/_data'
     ];
 
     /**
@@ -75,15 +75,14 @@ class Typo3 extends Module implements DependsOnModule
      * Requires module container (to provide access between modules of suite) and config.
      *
      * @param ModuleContainer $moduleContainer
-     * @param ProcessBuilder  $builder
      * @param null|array      $config
      * @codeCoverageIgnore
      */
-    public function __construct(ModuleContainer $moduleContainer, $builder, $config = null)
+    public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
-        $this->builder = $builder;
         parent::__construct($moduleContainer, $config);
         $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
+        $this->builder = new ProcessBuilder();
     }
 
     /**
@@ -156,12 +155,11 @@ class Typo3 extends Module implements DependsOnModule
     }
 
     /**
-     * @return ProcessBuilder
-     * @codeCoverageIgnore
+     * @param ProcessBuilder $builder
      */
-    protected function createBuilder()
+    public function setBuilder($builder)
     {
-        return new ProcessBuilder();
+        $this->builder = $builder;
     }
 
     /**

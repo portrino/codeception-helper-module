@@ -72,7 +72,8 @@ class FlushCacheTest extends Typo3Test
         $this->process->getOutput()->willReturn(self::DEBUG_SUCCESS);
         $this->asserts->assertTrue(true)->shouldBeCalled();
 
-        $this->typo3 = new Typo3($this->container->reveal(), $this->builder->reveal());
+        $this->typo3 = new Typo3($this->container->reveal());
+        $this->typo3->setBuilder($this->builder->reveal());
         $this->typo3->_inject($this->asserts->reveal());
     }
 
