@@ -87,7 +87,6 @@ class ExecuteSchedulerTaskTest extends Typo3Test
         $this->typo3 = new Typo3($this->container->reveal());
         $this->typo3->setProcessBuilderFactory($this->processBuilderFactory->reveal());
         $this->typo3->_inject($this->asserts->reveal());
-
     }
 
     /**
