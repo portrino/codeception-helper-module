@@ -25,4 +25,7 @@ interface ShopwareDatabase
 
     const S_USER = 's_user';
     const S_USER_ATTRIBUTES = 's_user_attributes';
+
+    const S_CORE_AUTH_ATTRIBUTES = 's_core_auth_attributes';
+    const S_CORE_AUTH = 's_core_auth';
 }
