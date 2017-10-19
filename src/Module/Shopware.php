@@ -20,7 +20,7 @@ use Codeception\Module\Asserts;
 use Portrino\Codeception\Interfaces\Commands\ShopwareCommand;
 use Portrino\Codeception\Module\Interfaces\CommandExecutorInterface;
 use Portrino\Codeception\Module\Traits\CommandExecutorTrait;
-use Symfony\Component\Process\ProcessBuilder;
+use Portrino\Codeception\Factory\ProcessBuilderFactory;
 
 /**
  * Class Shopware
@@ -57,6 +57,7 @@ class Shopware extends Module implements DependsOnModule, CommandExecutorInterfa
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
         parent::__construct($moduleContainer, $config);
+        $this->processBuilderFactory = new ProcessBuilderFactory();
     }
 
     /**
