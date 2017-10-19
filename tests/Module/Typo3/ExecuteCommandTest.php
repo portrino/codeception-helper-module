@@ -24,8 +24,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * Class Typo3ExecuteCommandTest
- *
+ * Class ExecuteCommandTest
  * @package Portrino\Codeception\Tests\Module\Typo3
  */
 class ExecuteCommandTest extends Typo3Test

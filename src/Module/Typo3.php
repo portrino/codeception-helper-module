@@ -21,17 +21,19 @@ use Codeception\Module\Asserts;
 use Codeception\TestInterface;
 use Portrino\Codeception\Factory\ProcessBuilderFactory;
 use Portrino\Codeception\Interfaces\Commands\Typo3Command;
+use Portrino\Codeception\Module\Interfaces\CommandExecutorInterface;
+use Portrino\Codeception\Module\Traits\CommandExecutorTrait;
 use Symfony\Component\Process\InputStream;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class Typo3
  *
  * @package Portrino\Codeception\Module
  */
-class Typo3 extends Module implements DependsOnModule
+class Typo3 extends Module implements DependsOnModule, CommandExecutorInterface
 {
+    use CommandExecutorTrait;
+
     const EXIT_STATUS_SUCCESS = 0;
     const EXIT_STATUS_FAILED = 1;
 
@@ -39,16 +41,6 @@ class Typo3 extends Module implements DependsOnModule
      * @var string
      */
     protected $dependencyMessage = '"Asserts" module is required.';
-
-    /**
-     * @var Asserts
-     */
-    protected $asserts;
-
-    /**
-     * @var ProcessBuilderFactory
-     */
-    protected $processBuilderFactory;
 
     /**
      * @var array
@@ -66,23 +58,18 @@ class Typo3 extends Module implements DependsOnModule
     ];
 
     /**
-     * @var
-     */
-    protected $typo3cmsPath;
-
-    /**
      * Module constructor.
      *
      * Requires module container (to provide access between modules of suite) and config.
      *
      * @param ModuleContainer $moduleContainer
-     * @param null|array      $config
+     * @param null|array $config
      * @codeCoverageIgnore
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
         parent::__construct($moduleContainer, $config);
-        $this->typo3cmsPath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
+        $this->consolePath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
         $this->processBuilderFactory = new ProcessBuilderFactory();
     }
 
@@ -102,14 +89,6 @@ class Typo3 extends Module implements DependsOnModule
     public function _inject(Asserts $asserts)
     {
         $this->asserts = $asserts;
-    }
-
-    /**
-     * @param ProcessBuilderFactory $processBuilderFactory
-     */
-    public function setProcessBuilderFactory($processBuilderFactory)
-    {
-        $this->processBuilderFactory = $processBuilderFactory;
     }
 
     /**
@@ -151,7 +130,7 @@ class Typo3 extends Module implements DependsOnModule
     public function importIntoDatabase($file)
     {
         $builder = $this->processBuilderFactory->getBuilder();
-        $builder->setPrefix($this->typo3cmsPath);
+        $builder->setPrefix($this->consolePath);
         $input = new InputStream();
         $sql = file_get_contents($file);
         $input->write($sql);
@@ -165,43 +144,10 @@ class Typo3 extends Module implements DependsOnModule
     }
 
     /**
-     * @param string $command
-     * @param array  $arguments
-     * @param array  $environmentVariables
-     */
-    public function executeCommand($command, $arguments = [], $environmentVariables = [])
-    {
-        $builder = $this->processBuilderFactory->getBuilder();
-
-        $builder->setPrefix($this->typo3cmsPath);
-
-        array_unshift($arguments, $command);
-        $arguments = array_map('strval', $arguments);
-
-        $builder->setArguments($arguments);
-        if (count($environmentVariables) > 0) {
-            $builder->addEnvironmentVariables($environmentVariables);
-        }
-        $process = $builder->getProcess();
-
-        $this->debugSection('Execute', $process->getCommandLine());
-
-        $process->run();
-
-        if ($process->isSuccessful()) {
-            $this->debugSection('Success', $process->getOutput());
-        } else {
-            $this->debugSection('Error', $process->getErrorOutput());
-        }
-
-        $this->asserts->assertTrue($process->isSuccessful());
-    }
-
-    /**
      * execute scheduler task
      *
-     * @param int   $taskId               Uid of the task that should be executed (instead of all scheduled tasks)
-     * @param bool  $force                The execution can be forced with this flag. The task will then be executed even if it is not
+     * @param int $taskId Uid of the task that should be executed (instead of all scheduled tasks)
+     * @param bool $force The execution can be forced with this flag. The task will then be executed even if it is not
      *                                    scheduled for execution yet. Only works, when a task is specified.
      * @param array $environmentVariables
      */

@@ -24,8 +24,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * Class Typo3BeforeSuiteTest
- *
+ * Class BeforeSuiteTest
  * @package Portrino\Codeception\Tests\Module\Typo3
  */
 class BeforeSuiteTest extends Typo3Test

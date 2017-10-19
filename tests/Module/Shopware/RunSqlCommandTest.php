@@ -1,6 +1,6 @@
 <?php
 
-namespace Portrino\Codeception\Tests\Module\Typo3;
+namespace Portrino\Codeception\Tests\Module\Shopware;
 
 /*
  * This file is part of the Codeception Helper Module project
@@ -17,19 +17,18 @@ namespace Portrino\Codeception\Tests\Module\Typo3;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\Asserts;
 use Portrino\Codeception\Factory\ProcessBuilderFactory;
-use Portrino\Codeception\Interfaces\Commands\Typo3Command;
-use Portrino\Codeception\Module\Typo3;
-use Portrino\Codeception\Tests\Module\Typo3Test;
+use Portrino\Codeception\Interfaces\Commands\ShopwareCommand;
+use Portrino\Codeception\Module\Shopware;
+use Portrino\Codeception\Tests\Module\ShopwareTest;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * Class ExecuteSchedulerTaskTest
- * @package Portrino\Codeception\Tests\Module\Typo3
+ * Class RunSqlCommandTest
+ * @package Portrino\Codeception\Tests\Module\Shopware
  */
-class ExecuteSchedulerTaskTest extends Typo3Test
+class RunSqlCommandTest extends ShopwareTest
 {
-
     /**
      *
      */
@@ -45,17 +44,11 @@ class ExecuteSchedulerTaskTest extends Typo3Test
 
         $tmpBuilder = new ProcessBuilder();
         $cmd = $tmpBuilder
-            ->setPrefix(self::$typo3cmsPath)
+            ->setPrefix(self::$shopwareConsolePath)
             ->setArguments(
                 [
-                    Typo3Command::SCHEDULER_RUN,
-                    'task-id' => '1',
-                    'force' => '1'
-                ]
-            )
-            ->addEnvironmentVariables(
-                [
-                    'foo' => 'bar'
+                    ShopwareCommand::RUN_SQL_COMMAND,
+                    'sqlcommand'
                 ]
             )
             ->getProcess()
@@ -64,16 +57,15 @@ class ExecuteSchedulerTaskTest extends Typo3Test
         $this->process->getCommandLine()->willReturn($cmd);
         $this->process->run()->shouldBeCalledTimes(1);
 
-        $this->builder->setPrefix(self::$typo3cmsPath)->shouldBeCalled();
+        $this->builder->setPrefix(self::$shopwareConsolePath)->shouldBeCalled();
         $this->builder
-            ->setArguments([
-                Typo3Command::SCHEDULER_RUN,
-                'task-id' => 1,
-                'force' => true
-            ])
+            ->setArguments(
+                [
+                    ShopwareCommand::RUN_SQL_COMMAND,
+                    'sqlcommand'
+                ]
+            )
             ->shouldBeCalled();
-
-        $this->builder->addEnvironmentVariables(['foo' => 'bar'])->shouldBeCalled();
 
         $this->builder->getProcess()->willReturn($this->process);
 
@@ -83,16 +75,16 @@ class ExecuteSchedulerTaskTest extends Typo3Test
 
         $this->processBuilderFactory->getBuilder()->willReturn($this->builder);
 
-        $this->typo3 = new Typo3($this->container->reveal());
-        $this->typo3->setProcessBuilderFactory($this->processBuilderFactory->reveal());
-        $this->typo3->_inject($this->asserts->reveal());
+        $this->shopware = new Shopware($this->container->reveal());
+        $this->shopware->setProcessBuilderFactory($this->processBuilderFactory->reveal());
+        $this->shopware->_inject($this->asserts->reveal());
     }
 
     /**
      * @test
      */
-    public function executeSchedulerTaskSuccesfully()
+    public function runSqlCommandSuccessfully()
     {
-        $this->typo3->executeSchedulerTask(1, true, ['foo' => 'bar']);
+        $this->shopware->runSqlCommand('sqlcommand');
     }
 }

@@ -24,8 +24,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * Class Typo3FlushCacheGroupsTest
- *
+ * Class FlushCacheGroupsTest
  * @package Portrino\Codeception\Tests\Module\Typo3
  */
 class FlushCacheGroupsTest extends Typo3Test

@@ -26,7 +26,6 @@ use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class ImportIntoDatabaseTest
- *
  * @package Portrino\Codeception\Tests\Module\Typo3
  */
 class ImportIntoDatabaseTest extends Typo3Test
