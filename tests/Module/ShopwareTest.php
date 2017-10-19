@@ -37,7 +37,7 @@ abstract class ShopwareTest extends TestCase
     /**
      * @var string
      */
-    protected static $shopwareConsolePath = '../../../../../bin/console';
+    protected static $shopwareConsolePath = '../../bin/console';
 
     /**
      * @var Shopware
