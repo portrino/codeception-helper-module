@@ -37,7 +37,7 @@ class Shopware extends Module implements DependsOnModule, CommandExecutorInterfa
      * @var array
      */
     protected $config = [
-        'bin-dir' => '../../../../../bin/'
+        'bin-dir' => '../../bin/'
     ];
 
     /**
