@@ -120,6 +120,89 @@ Import $file into database.
 $I->importIntoDatabase($file)
 ```
 
+### Shopware module
+
+```yml
+modules:
+    enabled:
+        - \Portrino\Codeception\Module\Shopware:
+            depends: Asserts
+            bin-dir: 
+```  
+ 
+Update codeception build
+    
+```bash
+codecept build
+```
+
+### Methods
+
+#### executeCommand
+
+Executes the specified shopware_console ``$command``.
+
+```php
+$I->executeCommand($command, $arguments = [], $environmentVariables = []);
+```
+
+#### runSqlCommand
+
+Executes SQL query in shopware_console.
+
+```php
+$I->runSqlCommand($sql);
+```
+
+#### activatePlugin
+
+Activates Shopware plugin.
+
+```php
+$I->activatePlugin($plugin);
+```
+
+#### installPlugin
+
+Install Shopware plugin. If activate = true, the plugin will be activated after installation.
+
+```php
+$I->installPlugin($plugin, $activate);
+```
+
+#### refreshPluginList
+
+Refresh Shopware plugin-list. You need to call this sometimes before installing a plugin.
+
+```php
+$I->refreshPluginList();
+```
+
+#### regenerateThemeCache
+
+Regenerates the theme-cache.
+
+```php
+$I->regenerateThemeCache();
+```
+
+#### clearCache
+
+Clear Shopware cache.
+
+```php
+$I->clearCache();
+```
+
+#### setPluginConfiguration
+
+Set configuration of Shopware plugin by plugin-name, configuration-key and configuration-value.
+  * you'll be able to set cofigurations for a specified shop by using the $shop parameter
+
+```php
+$I->setPluginConfiguration($plugin, $key, $value, $shop = 1);
+```
+
 ### Interfaces
 
 You should use our constants defined in some interfaces to prevent typos and make refactoring easier.
