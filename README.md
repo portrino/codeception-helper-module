@@ -226,6 +226,8 @@ Example:
 #### Shopware
 
 * ``\Portrino\Codeception\Interfaces\DatabaseTables\ShopwareDatabase``
+* ``\Portrino\Codeception\Interfaces\Cookies\ShopwareCookie``
+* ``\Portrino\Codeception\Interfaces\Commands\ShopwareCommand``
 
 ```php
   $I->seeInDatabase(
@@ -234,6 +236,34 @@ Example:
             'id' => 123,
         ]
   );
+```
+
+### Fixtures Helper
+
+For the sake of simplicity we added an little Helper for the Codeception Fixture feature.
+
+Please add in your _bootstrap.php file 
+
+``'_model'  =>  \Portrino\Codeception\Model\Typo3\Typo3FrontendUser::class,`` 
+
+as the first entry in your Fixture array.
+your Fixture has to look like
+
+```php
+\Codeception\Util\Fixtures::add(
+    'your_fixture_name',
+    [
+        '_model' =>  \Portrino\Codeception\Model\Typo3\Typo3FrontendUser::class, 
+        'fixtureValueX' => 'X',
+        'fixtureValueY' => 'Y'
+    ]
+);
+```
+
+now you'll be able to use your Fixture with
+
+```php
+Fixtures::get('your_fixture_name');
 ```
 
 ## Hints
