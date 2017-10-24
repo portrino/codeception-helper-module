@@ -253,7 +253,7 @@ your Fixture has to look like
 \Codeception\Util\Fixtures::add(
     'your_fixture_name',
     [
-        '_model' =>  \Portrino\Codeception\Model\Typo3\Typo3FrontendUser::class, 
+        '__model' =>  \Portrino\Codeception\Model\Typo3\Typo3FrontendUser::class, 
         'fixtureValueX' => 'X',
         'fixtureValueY' => 'Y'
     ]
