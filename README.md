@@ -244,7 +244,7 @@ For the sake of simplicity we added an little Helper for the Codeception Fixture
 
 Please add in your _bootstrap.php file 
 
-``'_model'  =>  \Portrino\Codeception\Model\Typo3\Typo3FrontendUser::class,`` 
+``'__model'  =>  \Portrino\Codeception\Model\Typo3\Typo3FrontendUser::class,`` 
 
 as the first entry in your Fixture array.
 your Fixture has to look like
@@ -260,10 +260,10 @@ your Fixture has to look like
 );
 ```
 
-now you'll be able to use your Fixture with
+now you'll be able to use your Fixture with our adapted Fixtures class
 
 ```php
-Fixtures::get('your_fixture_name');
+\Portrino\Codeception\Util\Fixtures::get('your_fixture_name');
 ```
 
 ## Hints
