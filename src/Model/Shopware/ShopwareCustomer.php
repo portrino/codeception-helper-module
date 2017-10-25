@@ -113,6 +113,8 @@ class ShopwareCustomer extends AbstractModel
                 'country' => $this->billingCountry
             ]
         ];
-        return array_filter($result, function($value) { return $value !== null; });
+        return array_filter($result, function ($value) {
+            return $value !== null;
+        });
     }
 }
