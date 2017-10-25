@@ -1,4 +1,5 @@
 <?php
+
 namespace Portrino\Codeception\Model\Shopware;
 
 /*
@@ -24,6 +25,11 @@ class ShopwareCustomer extends AbstractModel
     const SALUTATION_MR = 'mr';
     const SALUTATION_MS = 'ms';
     const SALUTATION_MRS = 'mrs';
+
+    /**
+     * @var int
+     */
+    public $id;
 
     /**
      * @var string
@@ -90,7 +96,8 @@ class ShopwareCustomer extends AbstractModel
      */
     public function toArray()
     {
-        return [
+        $result = [
+            'id' => $this->id,
             'email' => $this->email,
             'password' => $this->password,
             'salutation' => $this->salutation,
@@ -106,5 +113,6 @@ class ShopwareCustomer extends AbstractModel
                 'country' => $this->billingCountry
             ]
         ];
+        return array_filter($result, function($value) { return $value !== null; });
     }
 }
