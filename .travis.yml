@@ -20,13 +20,20 @@ matrix:
   fast_finish: true
   include:
     - php: 7.0
+      env: SYMFONY_PROCESS_VERSION=~3.3
+    - php: 7.0
+      env: SYMFONY_PROCESS_VERSION=~2.7.35
     - php: 7.1
+      env: SYMFONY_PROCESS_VERSION=~3.3
+    - php: 7.1
+      env: SYMFONY_PROCESS_VERSION=~2.7.35
 
 before_install:
   - composer self-update
   - composer --version
 
 install:
+  - composer require symfony/process:$SYMFONY_PROCESS_VERSION
   - composer install
 
 before_script:
