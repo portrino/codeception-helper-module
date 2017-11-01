@@ -19,6 +19,10 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\Module\Asserts;
 use Codeception\TestInterface;
+use Composer\Semver\Comparator;
+use Nette\NotSupportedException;
+use PackageVersions\Versions;
+use Portrino\Codeception\Exception\MethodNotSupportedException;
 use Portrino\Codeception\Factory\ProcessBuilderFactory;
 use Portrino\Codeception\Interfaces\Commands\Typo3Command;
 use Portrino\Codeception\Module\Interfaces\CommandExecutorInterface;
@@ -129,6 +133,11 @@ class Typo3 extends Module implements DependsOnModule, CommandExecutorInterface
      */
     public function importIntoDatabase($file)
     {
+        $version = Versions::getVersion('symfony/process');
+        if (Comparator::lessThan($version, '2.8.0')) {
+            throw new MethodNotSupportedException($this, '$I->importIntoDatabase is not supported for "symfony/process" < 2.8');
+        }
+
         $builder = $this->processBuilderFactory->getBuilder();
         $builder->setPrefix($this->consolePath);
         $input = new InputStream();

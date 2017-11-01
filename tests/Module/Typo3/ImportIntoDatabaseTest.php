@@ -16,6 +16,10 @@ namespace Portrino\Codeception\Tests\Module\Typo3;
 
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\Asserts;
+use Codeception\TestInterface;
+use Composer\Semver\Comparator;
+use PackageVersions\Versions;
+use Portrino\Codeception\Exception\MethodNotSupportedException;
 use Portrino\Codeception\Factory\ProcessBuilderFactory;
 use Portrino\Codeception\Interfaces\Commands\Typo3Command;
 use Portrino\Codeception\Module\Typo3;
@@ -36,43 +40,64 @@ class ImportIntoDatabaseTest extends Typo3Test
     protected static $file = __DIR__ . '/../../Fixture/data/dump.sql';
 
     /**
+     * @var bool
+     */
+    protected static $isMethodSupported;
+
+    /**
+     *
+     */
+    public static function setUpBeforeClass()
+    {
+        self::$isMethodSupported = Comparator::greaterThan(Versions::getVersion('symfony/process'), '2.8.0');
+        parent::setUpBeforeClass();
+    }
+
+    /**
      *
      */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->container = $this->prophesize(ModuleContainer::class);
-        $this->process = $this->prophesize(Process::class);
-        $this->processBuilderFactory = $this->prophesize(ProcessBuilderFactory::class);
-        $this->builder = $this->prophesize(ProcessBuilder::class);
-        $this->asserts = $this->prophesize(Asserts::class);
+        if (self::$isMethodSupported) {
+            $this->container = $this->prophesize(ModuleContainer::class);
+            $this->process = $this->prophesize(Process::class);
+            $this->processBuilderFactory = $this->prophesize(ProcessBuilderFactory::class);
+            $this->builder = $this->prophesize(ProcessBuilder::class);
+            $this->asserts = $this->prophesize(Asserts::class);
 
-        $tmpBuilder = new ProcessBuilder();
-        $cmd = $tmpBuilder
-            ->setPrefix(self::$typo3cmsPath)
-            ->add(Typo3Command::DATABASE_IMPORT)
-            ->getProcess()
-            ->getCommandLine();
+            $tmpBuilder = new ProcessBuilder();
+            $cmd = $tmpBuilder
+                ->setPrefix(self::$typo3cmsPath)
+                ->add(Typo3Command::DATABASE_IMPORT)
+                ->getProcess()
+                ->getCommandLine();
 
-        $this->process->getCommandLine()->willReturn($cmd);
-        $this->process->start()->shouldBeCalledTimes(1);
-        $this->process->wait()->shouldBeCalledTimes(1);
+            $this->process->getCommandLine()->willReturn($cmd);
+            $this->process->start()->shouldBeCalledTimes(1);
+            $this->process->wait()->shouldBeCalledTimes(1);
 
-        $this->builder->setPrefix(self::$typo3cmsPath)->shouldBeCalled();
-        $this->builder->add(Typo3Command::DATABASE_IMPORT)->shouldBeCalled();
+            $this->builder->setPrefix(self::$typo3cmsPath)->shouldBeCalled();
+            $this->builder->add(Typo3Command::DATABASE_IMPORT)->shouldBeCalled();
 
-        $this->builder->setInput(Argument::any())->willReturn($this->builder);
-        $this->builder->getProcess()->willReturn($this->process);
+            $this->builder->setInput(Argument::any())->willReturn($this->builder);
+            $this->builder->getProcess()->willReturn($this->process);
 
-        $this->process->isSuccessful()->willReturn(true);
-        $this->process->getOutput()->willReturn(self::DEBUG_SUCCESS);
+            $this->process->isSuccessful()->willReturn(true);
+            $this->process->getOutput()->willReturn(self::DEBUG_SUCCESS);
 
-        $this->processBuilderFactory->getBuilder()->willReturn($this->builder);
+            $this->processBuilderFactory->getBuilder()->willReturn($this->builder);
 
-        $this->typo3 = new Typo3($this->container->reveal());
-        $this->typo3->setProcessBuilderFactory($this->processBuilderFactory->reveal());
-        $this->typo3->_inject($this->asserts->reveal());
+            $this->typo3 = new Typo3($this->container->reveal());
+            $this->typo3->setProcessBuilderFactory($this->processBuilderFactory->reveal());
+            $this->typo3->_inject($this->asserts->reveal());
+        }
+
+        if (!self::$isMethodSupported) {
+            $this->container = $this->prophesize(ModuleContainer::class);
+            $this->typo3 = new Typo3($this->container->reveal());
+        }
     }
 
     /**
@@ -80,6 +105,13 @@ class ImportIntoDatabaseTest extends Typo3Test
      */
     public function importIntoDatabaseSuccessfully()
     {
-        $this->typo3->importIntoDatabase(self::$file);
+        if (self::$isMethodSupported) {
+            $this->typo3->importIntoDatabase(self::$file);
+        }
+
+        if (!self::$isMethodSupported) {
+            static::expectException(MethodNotSupportedException::class);
+            $this->typo3->importIntoDatabase(self::$file);
+        }
     }
 }
