@@ -22,6 +22,8 @@ interface ShopwareDatabase
 {
     const S_ARTICLES = 's_articles';
     const S_ARTICLES_DETAILS = 's_articles_details';
+    const S_ARTICLES_SUPPLIER = 's_articles_supplier';
+    const S_ARTICLES_SUPPLIER_ATTRIBUTES = 's_articles_supplier_attributes';
 
     const S_ORDER = 's_order';
     const S_ORDER_ATTRIBUTES = 's_order_attributes';
