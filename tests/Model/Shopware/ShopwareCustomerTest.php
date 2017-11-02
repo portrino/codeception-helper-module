@@ -22,10 +22,6 @@ use Portrino\Codeception\Model\Shopware\ShopwareCustomer;
  */
 class ShopwareCustomerTest extends TestCase
 {
-    const SALUTATION_MR = 'mr';
-    const SALUTATION_MS = 'ms';
-    const SALUTATION_MRS = 'mrs';
-
     /**
      * @test
      */
@@ -49,13 +45,13 @@ class ShopwareCustomerTest extends TestCase
         $customerArray = [
             'email' => 'dev@portrino.de',
             'password' => '123456',
-            'salutation' => self::SALUTATION_MR,
+            'salutation' => ShopwareCustomer::SALUTATION_MR,
             'lastname' => 'Lastname',
             'firstname' => 'Firstname',
             'billing' => [
                 'firstname' => 'Firstname',
                 'lastname' => 'Lastname',
-                'salutation' => self::SALUTATION_MR,
+                'salutation' => ShopwareCustomer::SALUTATION_MR,
                 'street' => 'Musterstraße 2',
                 'city' => 'Dresden',
                 'zipcode' => '01109',
