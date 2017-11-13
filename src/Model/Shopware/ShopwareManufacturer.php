@@ -40,6 +40,11 @@ class ShopwareManufacturer extends AbstractModel
     /**
      * @var string
      */
+    public $image;
+
+    /**
+     * @var string
+     */
     public $metaDescription;
 
     /**
@@ -56,6 +61,9 @@ class ShopwareManufacturer extends AbstractModel
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'image' => [
+                'link' => $this->image
+            ],
             'metaDescription' => $this->metaDescription,
             'metaKeywords' => $this->metaKeywords
         ];

@@ -32,12 +32,16 @@ class ShopwareManufacturerTest extends TestCase
 
         $shopwareManufacturer->name = 'name';
         $shopwareManufacturer->description = 'description';
+        $shopwareManufacturer->image = 'http://via.placeholder.com/350x150';
         $shopwareManufacturer->metaDescription = 'meta description';
         $shopwareManufacturer->metaKeywords = 'meta keywords';
 
         $customerArray = [
             'name' => 'name',
             'description' => 'description',
+            'image' => [
+                'link' => 'http://via.placeholder.com/350x150'
+            ],
             'metaDescription' => 'meta description',
             'metaKeywords' => 'meta keywords'
         ];
