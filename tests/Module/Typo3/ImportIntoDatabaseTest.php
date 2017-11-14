@@ -18,6 +18,7 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module\Asserts;
 use Codeception\TestInterface;
 use Composer\Semver\Comparator;
+use Composer\Semver\VersionParser;
 use PackageVersions\Versions;
 use Portrino\Codeception\Exception\MethodNotSupportedException;
 use Portrino\Codeception\Factory\ProcessBuilderFactory;
@@ -49,7 +50,10 @@ class ImportIntoDatabaseTest extends Typo3Test
      */
     public static function setUpBeforeClass()
     {
-        self::$isMethodSupported = Comparator::greaterThan(Versions::getVersion('symfony/process'), '2.8.0');
+        $versionParser = new VersionParser();
+        $version = Versions::getVersion('symfony/process');
+        $version = $versionParser->normalize(substr($version, 0, strpos($version, '@')));
+        self::$isMethodSupported = Comparator::greaterThan($version, '2.8.0');
         parent::setUpBeforeClass();
     }
 
