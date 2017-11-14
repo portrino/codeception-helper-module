@@ -20,7 +20,7 @@ use Codeception\Module;
 use Codeception\Module\Asserts;
 use Codeception\TestInterface;
 use Composer\Semver\Comparator;
-use Nette\NotSupportedException;
+use Composer\Semver\VersionParser;
 use PackageVersions\Versions;
 use Portrino\Codeception\Exception\MethodNotSupportedException;
 use Portrino\Codeception\Factory\ProcessBuilderFactory;
@@ -130,10 +130,13 @@ class Typo3 extends Module implements DependsOnModule, CommandExecutorInterface
 
     /**
      * @param string $file
+     * @throws MethodNotSupportedException
      */
     public function importIntoDatabase($file)
     {
+        $versionParser = new VersionParser();
         $version = Versions::getVersion('symfony/process');
+        $version = $versionParser->normalize(substr($version, 0, strpos($version, '@')));
         if (Comparator::lessThan($version, '2.8.0')) {
             throw new MethodNotSupportedException($this, '$I->importIntoDatabase is not supported for "symfony/process" < 2.8');
         }
