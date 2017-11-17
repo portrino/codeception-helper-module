@@ -280,4 +280,13 @@ To autoload vendor packages you have to require_once the autoload.php in your co
 ```php
 require_once(__DIR__ . '/../../../../web/autoload.php');
 ```
+## Authors
 
+![](https://avatars0.githubusercontent.com/u/726519?s=40&v=4)
+![](https://avatars0.githubusercontent.com/u/540478?s=40&v=4)
+
+* **André Wuttig** - *Initial work, Unit Tests* - [aWuttig](https://github.com/aWuttig)
+* **Leopold Engst** - *Unit Tests, Documentation* - [leen2104](https://github.com/leen2104)
+* **Axel Böswetter** - *Bugfixes* - [EvilBMP](https://github.com/EvilBMP)
+
+See also the list of [contributors](https://github.com/portrino/codeception-helper-module/graphs/contributors) who participated in this project.
