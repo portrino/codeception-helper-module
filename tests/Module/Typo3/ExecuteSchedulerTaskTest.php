@@ -62,6 +62,8 @@ class ExecuteSchedulerTaskTest extends Typo3Test
             ->getCommandLine();
 
         $this->process->getCommandLine()->willReturn($cmd);
+        $this->process->setTimeout(3600)->shouldBeCalledTimes(1);
+        $this->process->setIdleTimeout(60)->shouldBeCalledTimes(1);
         $this->process->run()->shouldBeCalledTimes(1);
 
         $this->builder->setPrefix(self::$typo3cmsPath)->shouldBeCalled();

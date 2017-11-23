@@ -18,6 +18,16 @@ trait CommandExecutorTrait
     protected $consolePath;
 
     /**
+     * @var int
+     */
+    protected $processTimeout;
+
+    /**
+     * @var int
+     */
+    protected $processIdleTimeout;
+
+    /**
      * @var Asserts
      */
     protected $asserts;
@@ -56,6 +66,9 @@ trait CommandExecutorTrait
         $process = $builder->getProcess();
 
         $this->debugSection('Execute', $process->getCommandLine());
+
+        $process->setTimeout($this->processTimeout);
+        $process->setIdleTimeout($this->processIdleTimeout);
 
         $process->run();
 
