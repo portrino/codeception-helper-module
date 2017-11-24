@@ -284,6 +284,7 @@ require_once(__DIR__ . '/../../../../web/autoload.php');
 
 ![](https://avatars0.githubusercontent.com/u/726519?s=40&v=4)
 ![](https://avatars0.githubusercontent.com/u/540478?s=40&v=4)
+![](https://avatars0.githubusercontent.com/u/31662036?s=40&v=4)
 
 * **André Wuttig** - *Initial work, Unit Tests* - [aWuttig](https://github.com/aWuttig)
 * **Leopold Engst** - *Unit Tests, Documentation* - [leen2104](https://github.com/leen2104)
