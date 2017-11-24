@@ -54,11 +54,12 @@ class Typo3 extends Module implements DependsOnModule, CommandExecutorInterface
     ];
 
     /**
-     * @var array[]
-     *          ['bin-dir']                 String Defines location of Typo3 bin folder
-     *          ['data-dir']                String Defines location of Codeception _data folder
-     *          ['process-timeout']         int Set Symfony process Timeout: Maximum number of seconds a process can take to finish
-     *          ['process-idle-timeout']    int Set Symfony process Idle Timeout: Maximum number of seconds a process can run without outputting anything
+     * @var array
+     *
+     * ['bin-dir']                 string defines location of Typo3 bin folder
+     * ['data-dir']                string defines location of Codeception _data folder
+     * ['process-timeout']         int set Symfony process Timeout: Maximum number of seconds a process can take to finish
+     * ['process-idle-timeout']    int set Symfony process Idle Timeout: Maximum number of seconds a process can run without outputting anything
      */
     protected $config = [
         'bin-dir' => '../../../../../../bin/',

@@ -7,6 +7,4 @@ parameters:
         - '#Call to an undefined method [a-zA-Z0-9\\_]+::amOnPage\(\)#'
         - '#Class PHPUnit_Framework_Test not found and could not be autoloaded.#'
         - '#Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy::[a-zA-Z0-9_]+\(\)#'
-        - '#Property [a-zA-Z0-9\\_]+::$config \(mixed\[\]\[\]\) does not accept default value of type \(int|string\)\[].#'
-        - '#Property [a-zA-Z0-9\\_]+::\$[a-zA-Z0-9_]+#'
     reportUnmatchedIgnoredErrors: false
