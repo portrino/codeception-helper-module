@@ -37,7 +37,9 @@ class Shopware extends Module implements DependsOnModule, CommandExecutorInterfa
      * @var array
      */
     protected $config = [
-        'bin-dir' => '../../bin/'
+        'bin-dir' => '../../bin/',
+        'process-timeout' => 3600,
+        'process-idle-timeout' => 60
     ];
 
     /**
@@ -51,12 +53,14 @@ class Shopware extends Module implements DependsOnModule, CommandExecutorInterfa
      * Requires module container (to provide access between modules of suite) and config.
      *
      * @param ModuleContainer $moduleContainer
-     * @param null            $config
+     * @param null $config
      * @codeCoverageIgnore
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
         parent::__construct($moduleContainer, $config);
+        $this->processTimeout = (int)$this->config['process-timeout'];
+        $this->processIdleTimeout = (int)$this->config['process-idle-timeout'];
         $this->processBuilderFactory = new ProcessBuilderFactory();
     }
 

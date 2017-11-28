@@ -56,6 +56,8 @@ class BeforeSuiteTest extends Typo3Test
 
 
         $this->process->getCommandLine()->willReturn($cmd);
+        $this->process->setTimeout(3600)->shouldBeCalledTimes(1);
+        $this->process->setIdleTimeout(60)->shouldBeCalledTimes(1);
         $this->process->run()->shouldBeCalledTimes(1);
 
 

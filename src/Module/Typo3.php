@@ -55,10 +55,17 @@ class Typo3 extends Module implements DependsOnModule, CommandExecutorInterface
 
     /**
      * @var array
+     *
+     * ['bin-dir']                 string defines location of Typo3 bin folder
+     * ['data-dir']                string defines location of Codeception _data folder
+     * ['process-timeout']         int set Symfony process Timeout: Maximum number of seconds a process can take to finish
+     * ['process-idle-timeout']    int set Symfony process Idle Timeout: Maximum number of seconds a process can run without outputting anything
      */
     protected $config = [
         'bin-dir' => '../../../../../../bin/',
-        'data-dir' => 'tests/_data'
+        'data-dir' => 'tests/_data',
+        'process-timeout' => 3600,
+        'process-idle-timeout' => 60
     ];
 
     /**
@@ -74,6 +81,8 @@ class Typo3 extends Module implements DependsOnModule, CommandExecutorInterface
     {
         parent::__construct($moduleContainer, $config);
         $this->consolePath = sprintf('%s%s', $this->config['bin-dir'], 'typo3cms');
+        $this->processTimeout = $this->config['process-timeout'];
+        $this->processIdleTimeout = $this->config['process-idle-timeout'];
         $this->processBuilderFactory = new ProcessBuilderFactory();
     }
 
