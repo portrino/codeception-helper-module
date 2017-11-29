@@ -57,6 +57,16 @@ class ShopwareCustomer extends AbstractModel
     public $lastname;
 
     /**
+     * @var int
+     */
+    public $paymentId;
+
+    /**
+     * @var int
+     */
+    public $paymentPreset;
+
+    /**
      * @var string
      */
     public $billingFirstname;
@@ -103,6 +113,8 @@ class ShopwareCustomer extends AbstractModel
             'salutation' => $this->salutation,
             'lastname' => $this->lastname,
             'firstname' => $this->firstname,
+            'paymentPreset' => $this->paymentPreset,
+            'paymentId' => $this->paymentId,
             'billing' => [
                 'firstname' => $this->billingFirstname,
                 'lastname' => $this->billingLastname,
