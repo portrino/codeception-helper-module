@@ -48,4 +48,8 @@ interface ShopwareDatabase
 
     const S_CORE_AUTH_ATTRIBUTES = 's_core_auth_attributes';
     const S_CORE_AUTH = 's_core_auth';
+
+    const S_EMARKETING_VOUCHERS = 's_emarketing_vouchers';
+    const S_EMARKETING_VOUCHER_CODES = 's_emarketing_voucher_codes';
+    const S_EMARKETING_VOUCHERS_ATTRIBUTES = 's_emarketing_vouchers_attributes';
 }
