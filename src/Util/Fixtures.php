@@ -30,7 +30,7 @@ class Fixtures extends \Codeception\Util\Fixtures
         $data = parent::get($name);
         $result = $data;
 
-        if (isset($data['__model']) && class_exists($data['__model'])) {
+        if (is_array($data) && isset($data['__model']) && class_exists($data['__model'])) {
             $modelClassName = $data['__model'];
             unset($data['__model']);
             $model = new $modelClassName();
